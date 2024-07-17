@@ -1,4 +1,4 @@
-const { sql, poolPromise } = require('../config/db'); // Ajusta la ruta
+const { sql, poolPromise } = require('./db'); // Ajusta la ruta
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
