@@ -1,28 +1,28 @@
-const sql = require('mssql');
+const sql = require("mssql");
 
 const dbConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER,
-    database: process.env.DB_NAME,
-    options: {
-        encrypt: false, // Cambia esto si tu base de datos lo requiere
-        enableArithAbort: true
-    }
+  user: "sqlserver", 
+  password: "Gatito06", 
+  server: "34.30.173.222", 
+  database: "tiendita", 
+  options: {
+    encrypt: false, 
+    enableArithAbort: true
+  },
 };
 
 const poolPromise = new sql.ConnectionPool(dbConfig)
-    .connect()
-    .then(pool => {
-        console.log('Connected to SQL Server');
-        return pool;
-    })
-    .catch(err => {
-        console.error('Database Connection Failed! Bad Config: ', err);
-        throw err;
-    });
+  .connect()
+  .then((pool) => {
+    console.log("Connected to SQL Server");
+    return pool;
+  })
+  .catch((err) => {
+    console.error("Database Connection Failed! Bad Config: ", err);
+    throw err;
+  });
 
 module.exports = {
-    sql,
-    poolPromise
+  sql,
+  poolPromise,
 };
