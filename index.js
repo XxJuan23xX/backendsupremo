@@ -1,29 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const userRoutes = require('./userRoutes');
-const { sql, poolPromise } = require('./db');
+const userRoutes = require('./src/routes/userRoutes');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(cors());
+// Configuración de CORS
+const allowedOrigins = ['https://storepet.vercel.app']; // Reemplaza con tu dominio frontend
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+}));
 
-app.get('/', (req, res) => {
-    res.send('Hello, this is the backend!');
-});
+app.use(bodyParser.json());
 
 app.use('/api/users', userRoutes);
-
-app.get('/api/test-db', async (req, res) => {
-    try {
-        const pool = await poolPromise;
-        const result = await pool.request().query('SELECT COUNT(*) as count FROM Usuarios');
-        res.json({ count: result.recordset[0].count });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 const PORT = process.env.PORT || 5000;
 
