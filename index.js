@@ -27,13 +27,23 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 app.use(bodyParser.json());
-app.use('/api/users', userRoutes);
 
 // Endpoint raíz
 app.get('/', (req, res) => {
     res.send('Hello, this is the backend!');
 });
 
+app.use('/api/users', userRoutes);
+
+app.get('/api/test-db', async (req, res) => {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query('SELECT COUNT(*) as count FROM Usuarios');
+        res.json({ count: result.recordset[0].count });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
