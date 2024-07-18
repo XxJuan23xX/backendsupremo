@@ -20,6 +20,10 @@ app.use(cors({
     credentials: true,
 }));
 
+app.get('/', (req, res) => {
+    res.send('Hello, this is the backend!');
+});
+
 // Middleware para asegurarse de que las solicitudes OPTIONS reciban las cabeceras adecuadas
 app.options('*', cors({
     origin: allowedOrigins,
