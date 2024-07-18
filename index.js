@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const userRoutes = require('./userRoutes');
+const orderRoutes = require('./orderRoutes');
+const productRoutes = require('./productRoutes');
+const { poolPromise } = require('./db');
 
 const app = express();
 
@@ -33,8 +36,12 @@ app.get('/', (req, res) => {
     res.send('Hello, this is the backend!');
 });
 
+// Rutas
 app.use('/api/users', userRoutes);
+app.use('/api', orderRoutes);
+app.use('/api', productRoutes);
 
+// Endpoint de prueba de conexión a la base de datos
 app.get('/api/test-db', async (req, res) => {
     try {
         const pool = await poolPromise;
@@ -44,6 +51,7 @@ app.get('/api/test-db', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
