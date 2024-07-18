@@ -5,7 +5,7 @@ const userRoutes = require('./userRoutes');
 
 const app = express();
 
-// Configuración de CORS
+// Configuración de CORS PARA EVITAR ERROR
 const allowedOrigins = ['https://storepet.vercel.app']; // Reemplaza con tu dominio frontend
 app.use(cors({
     origin: allowedOrigins,
