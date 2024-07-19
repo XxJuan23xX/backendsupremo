@@ -1,5 +1,5 @@
-const { sql, poolPromise } = require('./db'); // Ajusta la ruta
-const bcrypt = require('bcrypt');
+const { sql, poolPromise } = require('./db');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
